@@ -98,6 +98,7 @@ export default function PolarChart({ maxScore, score, slices, activeSlice, onSli
           font-size: ${SIZE / 4}px;
           font-weight: 500;
           line-height: 1;
+          text-align: center;
         }
         .PolarChart-innerCircle span {
           font-size: ${SIZE / 9}px;
