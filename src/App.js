@@ -13,6 +13,8 @@ class App extends Component {
       <div className="App">
         <div style={{ width: 400, margin: '0 auto' }}>
           <PolarChart
+            score={632}
+            maxScore={800}
             activeSlice={activeSlice}
             onSliceSelected={(slice, index) => this.setState({ activeSlice: index })}
             slices={[

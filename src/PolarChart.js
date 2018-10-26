@@ -5,6 +5,7 @@ const RAD_CIRCUMFERENCE = Math.PI * 2;
 const CENTER = SIZE / 2;
 const RADIUS = CENTER - 1; // padding to prevent clipping
 const MIN_SLICE_SIZE = CENTER * 0.07;
+const NUMBER_OF_INDICATING_CIRCLES = 5;
 
 function renderPaths({ slices, onSliceSelected, activeSlice }) {
   const slicePercentage = 1 / slices.length;
@@ -48,7 +49,7 @@ function renderPaths({ slices, onSliceSelected, activeSlice }) {
         transform={[
           `translate(${translate} ${translate})`,
           `scale(${relValue})`,
-          `rotate(${index * slicePercentage * 360} ${SIZE/2} ${SIZE/2})`,
+          `rotate(${index * slicePercentage * 360} ${CENTER} ${CENTER})`,
         ].join(' ')}
         onClick={() => onSliceSelected(slice, index)}
         style={{
@@ -59,38 +60,71 @@ function renderPaths({ slices, onSliceSelected, activeSlice }) {
   });
 }
 
-export default function PolarChart({ slices, activeSlice, onSliceSelected }) {
+export default function PolarChart({ maxScore, score, slices, activeSlice, onSliceSelected }) {
+  const gap = CENTER / (NUMBER_OF_INDICATING_CIRCLES + 1);
   return (
     <div
+      className="PolarChart"
       style={{
         position: 'relative',
       }}
     >
+      <style>{`
+        .PolarChart path {
+          cursor: pointer;
+        }
+        .PolarChart-innerCircle {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          border-radius: 50%;
+          background-color: #fff;
+          height: 20%;
+          width: 20%;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          font-size: ${SIZE / 4}px;
+          font-weight: 500;
+          line-height: 1;
+        }
+        .PolarChart-innerCircle span {
+          font-size: ${SIZE / 9}px;
+          opacity: 0.5;
+          display: block;
+          line-height: 1;
+        }
+      `}</style>
       <svg viewBox={`0 0 ${SIZE} ${SIZE}`}>
         <g transform={`rotate(-90 ${CENTER} ${CENTER})`}>
           {renderPaths({ slices, onSliceSelected, activeSlice })}
         </g>
-        <circle cx={CENTER} cy={CENTER} r="40" stroke="#fff" strokeWidth="1" fill="none" />
-        <circle cx={CENTER} cy={CENTER} r="30" stroke="#fff" strokeWidth="1" fill="none" />
-        <circle cx={CENTER} cy={CENTER} r="20" stroke="#fff" strokeWidth="1" fill="none" />
+        {[...Array(NUMBER_OF_INDICATING_CIRCLES)].map((_, index) => (
+          <circle
+            key={index}
+            cx={CENTER}
+            cy={CENTER}
+            r={(gap / 2) + (gap * (index + 1))}
+            stroke="#fff"
+            strokeWidth="0.8"
+            fill="none"
+            style={{ pointerEvents: 'none' }}
+          />
+        ))}
       </svg>
       <div
-        style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          borderRadius: '50%',
-          backgroundColor: '#fff',
-          height: '20%',
-          width: '20%',
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
+        className="PolarChart-innerCircle"
+        onClick={() => onSliceSelected(undefined, undefined)}
       >
-        632
+        <div>
+          {score}
+          <span>
+            /{maxScore}
+          </span>
+        </div>
       </div>
     </div>
   );
