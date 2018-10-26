@@ -3,7 +3,7 @@ import React from 'react';
 const SIZE = 100;
 const RAD_CIRCUMFERENCE = Math.PI * 2;
 const CENTER = SIZE / 2;
-const RADIUS = CENTER - 1; // padding to prevent clipping
+const RADIUS = CENTER - (CENTER / 8); // padding to prevent clipping
 const MIN_SLICE_SIZE = CENTER * 0.07;
 const NUMBER_OF_INDICATING_CIRCLES = 5;
 
@@ -37,9 +37,13 @@ function renderPaths({ slices, onSliceSelected, activeSlice }) {
 
     const relValue = (value + MIN_SLICE_SIZE) / (highestValue + MIN_SLICE_SIZE);
     const translate = (1 - relValue) * 50;
-    let opacity = 1;
-    if (typeof activeSlice !== 'undefined' && index !== activeSlice) {
-      opacity = 0.5;
+    let opacity = 0.9;
+    if (typeof activeSlice !== 'undefined') {
+      if (index === activeSlice) {
+        opacity = 1;
+      } else {
+        opacity = 0.5;
+      }
     }
     return (
       <path
@@ -62,6 +66,7 @@ function renderPaths({ slices, onSliceSelected, activeSlice }) {
 
 export default function PolarChart({ maxScore, score, slices, activeSlice, onSliceSelected }) {
   const gap = CENTER / (NUMBER_OF_INDICATING_CIRCLES + 1);
+  const degPerSlice = 360 / slices.length;
   return (
     <div
       className="PolarChart"
@@ -72,6 +77,9 @@ export default function PolarChart({ maxScore, score, slices, activeSlice, onSli
       <style>{`
         .PolarChart path {
           cursor: pointer;
+        }
+        .PolarChart path:hover {
+          opacity: 1 !important;
         }
         .PolarChart-innerCircle {
           position: absolute;
@@ -97,7 +105,44 @@ export default function PolarChart({ maxScore, score, slices, activeSlice, onSli
           display: block;
           line-height: 1;
         }
+        .PolarChart-label {
+          height: 50%;
+          position: absolute;
+          left: 50%;
+          top: 0;
+          transform-origin: bottom center;
+          font-weight: bold;
+          width: 0;
+        }
       `}</style>
+      {slices.map((slice, i) => {
+        const { label, color } = slice;
+        const deg = (360 * (i / slices.length)) - (degPerSlice / 2);
+        let opacity = 1;
+        if (typeof activeSlice !== 'undefined' && i !== activeSlice) {
+          opacity = 0.5;
+        }
+        return (
+          <div
+            className="PolarChart-label"
+            style={{
+              color,
+              transform: `rotate(${deg}deg)`,
+            }}
+          >
+            <div
+              style={{
+                transform: `translateX(-50%) rotate(${360 - deg}deg)`,
+                cursor: 'pointer',
+                opacity,
+              }}
+              onClick={() => onSliceSelected(slice, i)}
+            >
+              {label}
+            </div>
+          </div>
+        );
+      })}
       <svg viewBox={`0 0 ${SIZE} ${SIZE}`}>
         <g transform={`rotate(-90 ${CENTER} ${CENTER})`}>
           {renderPaths({ slices, onSliceSelected, activeSlice })}

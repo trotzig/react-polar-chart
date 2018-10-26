@@ -19,26 +19,32 @@ class App extends Component {
             onSliceSelected={(slice, index) => this.setState({ activeSlice: index })}
             slices={[
               {
+                label: '1',
                 value: 5,
-                color: 'yellow',
+                color: 'orange',
               },
               {
+                label: '2',
                 value: 0,
                 color: 'black',
               },
               {
+                label: '3',
                 value: 5,
                 color: 'pink',
               },
               {
+                label: '4',
                 value: 7,
                 color: 'green',
               },
               {
+                label: '5',
                 value: 10,
                 color: 'red',
               },
               {
+                label: '6',
                 value: 7,
                 color: 'blue',
               },
