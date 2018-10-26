@@ -1,25 +1,41 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import PolarChart from './PolarChart';
 import './App.css';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <div style={{ width: 400, margin: '0 auto' }}>
+          <PolarChart
+            slices={[
+              {
+                value: 5,
+                color: 'yellow',
+              },
+              {
+                value: 0,
+                color: 'black',
+              },
+              {
+                value: 5,
+                color: 'pink',
+              },
+              {
+                value: 7,
+                color: 'green',
+              },
+              {
+                value: 10,
+                color: 'red',
+              },
+              {
+                value: 7,
+                color: 'blue',
+              },
+            ]}
+          />
+        </div>
       </div>
     );
   }
