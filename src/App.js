@@ -3,11 +3,18 @@ import PolarChart from './PolarChart';
 import './App.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props) ;
+    this.state = { activeSlice: undefined };
+  }
   render() {
+    const { activeSlice } = this.state;
     return (
       <div className="App">
         <div style={{ width: 400, margin: '0 auto' }}>
           <PolarChart
+            activeSlice={activeSlice}
+            onSliceSelected={(slice, index) => this.setState({ activeSlice: index })}
             slices={[
               {
                 value: 5,
