@@ -125,7 +125,7 @@ export default function PolarChart({ maxScore, score, slices, activeSlice, onSli
         `}</style>
         {slices.map((slice, i) => {
           const { label, color } = slice;
-          const deg = (360 * (i / slices.length)) - (degPerSlice / 2);
+          const deg = (360 * (i / slices.length)) + (degPerSlice / 2);
           let opacity = 1;
           if (typeof activeSlice !== 'undefined' && i !== activeSlice) {
             opacity = 0.5;
@@ -152,7 +152,7 @@ export default function PolarChart({ maxScore, score, slices, activeSlice, onSli
           );
         })}
         <svg viewBox={`0 0 ${SIZE} ${SIZE}`}>
-          <g transform={`rotate(-90 ${CENTER} ${CENTER})`}>
+          <g transform={`rotate(-${(degPerSlice / 2)} ${CENTER} ${CENTER})`}>
             {renderPaths({ slices, onSliceSelected, activeSlice })}
           </g>
           {[...Array(NUMBER_OF_INDICATING_CIRCLES)].map((_, index) => (
