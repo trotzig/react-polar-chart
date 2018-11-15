@@ -9,10 +9,7 @@ const NUMBER_OF_INDICATING_CIRCLES = 5;
 
 function renderPaths({ slices, onSliceSelected, activeSlice }) {
   const slicePercentage = 1 / slices.length;
-  let highestValue = 0;
-  slices.forEach(({ value }) => {
-    highestValue = Math.max(highestValue, value);
-  });
+  let highestValue = 10;
 
   const radSegment = slicePercentage * RAD_CIRCUMFERENCE;
   const x = Math.cos(radSegment) * RADIUS;
