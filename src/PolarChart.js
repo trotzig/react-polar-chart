@@ -4,12 +4,12 @@ const SIZE = 100;
 const RAD_CIRCUMFERENCE = Math.PI * 2;
 const CENTER = SIZE / 2;
 const RADIUS = CENTER - (CENTER / 8); // padding to prevent clipping
-const MIN_SLICE_SIZE = CENTER * 0.07;
+const MIN_SLICE_SIZE = CENTER * 0.01;
 const NUMBER_OF_INDICATING_CIRCLES = 5;
 
 function renderPaths({ slices, onSliceSelected, activeSlice }) {
   const slicePercentage = 1 / slices.length;
-  let highestValue = 10;
+  let highestValue = 1;
 
   const radSegment = slicePercentage * RAD_CIRCUMFERENCE;
   const x = Math.cos(radSegment) * RADIUS;

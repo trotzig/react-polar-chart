@@ -20,7 +20,7 @@ class App extends Component {
             slices={[
               {
                 label: '1',
-                value: 5,
+                value: 0.5,
                 color: 'orange',
               },
               {
@@ -30,22 +30,22 @@ class App extends Component {
               },
               {
                 label: '3',
-                value: 5,
+                value: 0.5,
                 color: 'pink',
               },
               {
                 label: '4',
-                value: 7,
+                value: 0.7,
                 color: 'green',
               },
               {
                 label: '5',
-                value: 10,
+                value: 1,
                 color: 'red',
               },
               {
                 label: '6',
-                value: 7,
+                value: 0.7,
                 color: 'blue',
               },
             ]}
